@@ -1,27 +1,28 @@
-apply plugin: 'com.android.application'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-android {
-    compileSdkVersion 31
-    buildToolsVersion '30.0.0'
-    defaultConfig {
-        applicationId "developer.shivam.lifesumfloatingactionbutton"
-        minSdkVersion 16
-        targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+buildscript {
+    ext.kotlin_version = '1.3.72'
+    repositories {
+        google()
+        jcenter()
+
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.androidx.support:appcompat-v7:25.1.0'
-    compile 'com.androidx.support:design:25.1.0'
-    compile 'com.androidx.support:cardview-v7:25.1.0'
+allprojects {
+    repositories {
+        google()
+        jcenter()
+
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }

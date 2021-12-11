@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/samue/Development/Udacity_Android_NanoDegree/Section 3/Project3/nd940-c3-advanced-android-programming-project-starter/starter/app/src/main/res/drawable-v24/ic_assistant_black_24dp.xml" value="0.275" />
+        <entry key="..\:/Users/samue/Development/Udacity_Android_NanoDegree/Section 3/Project3/nd940-c3-advanced-android-programming-project-starter/starter/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.275" />
+        <entry key="..\:/Users/samue/Development/Udacity_Android_NanoDegree/Section 3/Project3/nd940-c3-advanced-android-programming-project-starter/starter/app/src/main/res/drawable/ic_launcher_background.xml" value="0.275" />
+        <entry key="..\:/Users/samue/Development/Udacity_Android_NanoDegree/Section 3/Project3/nd940-c3-advanced-android-programming-project-starter/starter/app/src/main/res/layout/activity_detail.xml" value="0.22418478260869565" />
+        <entry key="..\:/Users/samue/Development/Udacity_Android_NanoDegree/Section 3/Project3/nd940-c3-advanced-android-programming-project-starter/starter/app/src/main/res/layout/activity_detail2.xml" value="0.2421875" />
+        <entry key="..\:/Users/samue/Development/Udacity_Android_NanoDegree/Section 3/Project3/nd940-c3-advanced-android-programming-project-starter/starter/app/src/main/res/layout/activity_main.xml" value="0.22418478260869565" />
+        <entry key="..\:/Users/samue/Development/Udacity_Android_NanoDegree/Section 3/Project3/nd940-c3-advanced-android-programming-project-starter/starter/app/src/main/res/layout/content_detail.xml" value="0.36041666666666666" />
+        <entry key="..\:/Users/samue/Development/Udacity_Android_NanoDegree/Section 3/Project3/nd940-c3-advanced-android-programming-project-starter/starter/app/src/main/res/layout/content_main.xml" value="0.36041666666666666" />
+        <entry key="..\:/Users/samue/Development/Udacity_Android_NanoDegree/Section 3/Project3/nd940-c3-advanced-android-programming-project-starter/starter/app/src/main/res/menu/menu_main.xml" value="0.36041666666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
 </project>
