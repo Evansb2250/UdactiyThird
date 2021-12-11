@@ -24,21 +24,21 @@
 
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/glideButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/radioButtonMargin"
             android:text="Glide - Image binidng Library by BumpTech " />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/loadApp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/radioButtonMargin"
             android:text="LoadApp - Current repository by Udacity" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/retrofit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/radioButtonMargin"

@@ -56,8 +56,6 @@ suspend fun createRequest(
                 }
                 DownloadManager.STATUS_RUNNING -> {
                     println("running")
-                    //cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES)
-                    // cursor.getInt()
                     val total_Download_Size = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
                     val total_downloaded = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
 
@@ -85,10 +83,6 @@ suspend fun createRequest(
     }
 
 
-//
-
-//    var bytes_Downloaded = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
-//    val fullSize = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
 
 
 }
@@ -98,14 +92,5 @@ suspend fun changeButtonContext(clickable: Boolean, loadingButton: LoadingButton
         loadingButton.isContextClickable = clickable
     }
 }
-
-
-//    Log.i("DOWNLOADMANAGER", "${bytes_Downloaded}  full size ${fullSize}")
-//    loadingButton.updateIsClickContext()
-//  loadingButton.getDownloadProgress(32)
-
-
-//        //create a euqry
-
 
 

@@ -1,17 +1,14 @@
 package com.udacity
 
 import android.animation.ValueAnimator
-import android.app.DownloadManager
 import android.content.Context
-import android.content.Context.DOWNLOAD_SERVICE
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
-import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
+import com.udacity.environmentvariables.ProjectData
 import com.udacity.util.createRequest
 import kotlinx.coroutines.*
 import kotlin.properties.Delegates
@@ -27,18 +24,27 @@ class LoadingButton @JvmOverloads constructor(
     private var title: String = ""
     private var desc: String = ""
     private var url: String = ""
-    private var fragmentContext: Context? = null
-    private val scope:CoroutineScope =  CoroutineScope(CoroutineName("MyScope"))
+    private var fragmentContext: Context? = context
+    private val scope: CoroutineScope = CoroutineScope(CoroutineName("MyScope"))
 
     private val valueAnimator = ValueAnimator()
+
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = Color.RED
+        textAlign = Paint.Align.CENTER
+        textSize = 55.0f
+        typeface = Typeface.create("", Typeface.BOLD)
+    }
+
+
+
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
         when (new) {
             ButtonState.Loading -> {
-                val downloadManager = fragmentContext?.getSystemService(DOWNLOAD_SERVICE) as DownloadManager
                 scope.launch {
-                        createRequest(title, desc, url, fragmentContext!!, this@LoadingButton)
+                    createRequest(title, desc, url, fragmentContext!!, this@LoadingButton)
                 }
-
             }
             ButtonState.Completed -> {
                 println("downLoad finished")
@@ -54,13 +60,7 @@ class LoadingButton @JvmOverloads constructor(
     }
 
 
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.FILL
-        color = Color.RED
-        textAlign = Paint.Align.CENTER
-        textSize = 55.0f
-        typeface = Typeface.create("", Typeface.BOLD)
-    }
+
 
 
     fun updateIsClickContext() {
@@ -68,43 +68,38 @@ class LoadingButton @JvmOverloads constructor(
     }
 
 
+    override fun performClick(): Boolean {
+        val nulValueToEmptySpace = ""
+        this.title = ProjectData.getTitle()?:nulValueToEmptySpace
+        this.desc = ProjectData.getDesc()?:nulValueToEmptySpace
+        this.url = ProjectData.getUrl()?:nulValueToEmptySpace
+
+        if (title != nulValueToEmptySpace && desc != nulValueToEmptySpace && url != nulValueToEmptySpace) {
+             buttonState = ButtonState.Clicked
+        }
+        return super.performClick()
+
+    }
+
+
     suspend fun getDownloadProgress(progress: Double) {
-        paint.color = Color.YELLOW
-       println("Percentage $progress")
-
-
-        withContext(Dispatchers.Main){
+        withContext(Dispatchers.Main) {
             valueAnimator.addUpdateListener {
                 @Override
-                fun onAnimationUpdate(animation: ValueAnimator){
+                fun onAnimationUpdate(animation: ValueAnimator) {
                     val animatedValue = animation.getAnimatedValue().toString().toInt()
 
                 }
             }
 
         }
-
-
         invalidate()
     }
 
 
-    fun startDownload(title: String?, desc: String?, url: String?, fragContext: Context) {
-        if (title != null && desc != null && url != null && fragContext != null) {
-            this.title = title
-            this.desc = desc
-            this.url = url
-            this.fragmentContext = fragContext
-            buttonState = ButtonState.Clicked
-
-        }
-
-
-    }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
         if (canvas != null) {
             canvas.drawPaint(paint)
         }
