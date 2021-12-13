@@ -8,6 +8,9 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.udacity.environmentvariables.ProjectData
 import com.udacity.download_util.createRequest
 import kotlinx.coroutines.*
@@ -29,6 +32,8 @@ class LoadingButton @JvmOverloads constructor(
 
     private val valueAnimator = ValueAnimator()
 
+
+
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         color = Color.RED
@@ -37,28 +42,27 @@ class LoadingButton @JvmOverloads constructor(
         typeface = Typeface.create("", Typeface.BOLD)
     }
 
-
-
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
         when (new) {
             ButtonState.Loading -> {
                 scope.launch {
-                    createRequest(title, desc, url, fragmentContext!!, this@LoadingButton)
+                 createRequest(title, desc, url, fragmentContext!!, this@LoadingButton)
+                    withContext(Dispatchers.Main){
+                        buttonState = ButtonState.Completed
+                    }
                 }
             }
             ButtonState.Completed -> {
-                println("downLoad finished")
+                isClickable = true
             }
 
             ButtonState.Clicked -> {
-                println("Clicked will start loading")
                 buttonState = ButtonState.Loading
+                isClickable = false
 
             }
-
         }
     }
-
 
 
 

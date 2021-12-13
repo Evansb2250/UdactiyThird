@@ -31,12 +31,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val loadAppButton = findViewById<RadioButton>(R.id.loadApp)
         val retrofitButton = findViewById<RadioButton>(R.id.retrofit)
 
+
         glideButton.setOnClickListener(this)
         loadAppButton.setOnClickListener(this)
         retrofitButton.setOnClickListener(this)
-
-
-
     }
 
 
