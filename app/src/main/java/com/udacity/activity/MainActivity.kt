@@ -3,6 +3,7 @@ package com.udacity.activity
 import android.app.DownloadManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Build
@@ -12,24 +13,9 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.udacity.R
-import com.udacity.environmentvariables.ProjectData
+import com.udacity.environmentvariables.*
 import com.udacity.receiver.DownloadReceiver
 import kotlinx.android.synthetic.main.activity_main.*
-
-private val GLIDE_URL = "https://github.com/bumptech/glide/archive/refs/heads/master.zip"
-private val GLIDE_TITLE = "Downloading Glide"
-private val GLIDE_DESC = "Glide"
-
-private val PROJECT_STARTER_URL =
-    "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/refs/heads/master.zip"
-private val PROJECT_Starter_Title = "Downloading Project Starter"
-private val PROJECT_Starter_DESC = "Project Starter"
-
-private val RETROFIT_URL =
-    "https://github.com/square/retrofit/archive/refs/heads/master.zip"
-private val RETROFIT_TITLE = "Downloading Retrofit"
-private val RETROFIT_DESC = "Retrofit"
-
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -37,13 +23,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        registerReceiver(DownloadReceiver, IntentFilter(SuccessMessage))
 
-        registerReceiver(DownloadReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
-        createChannel("DOWNLOAD_CHANNEL", "Testing to see if channel is created")
         val radioButtonGroup = findViewById<RadioGroup>(R.id.button_group)
-
-
-
 
         val glideButton = findViewById<RadioButton>(R.id.glideButton)
         val loadAppButton = findViewById<RadioButton>(R.id.loadApp)
@@ -52,6 +34,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         glideButton.setOnClickListener(this)
         loadAppButton.setOnClickListener(this)
         retrofitButton.setOnClickListener(this)
+
+
 
     }
 

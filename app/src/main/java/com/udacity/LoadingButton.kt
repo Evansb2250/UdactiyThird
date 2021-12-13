@@ -9,7 +9,7 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import com.udacity.environmentvariables.ProjectData
-import com.udacity.util.createRequest
+import com.udacity.download_util.createRequest
 import kotlinx.coroutines.*
 import kotlin.properties.Delegates
 

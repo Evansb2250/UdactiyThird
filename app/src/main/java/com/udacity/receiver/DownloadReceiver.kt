@@ -5,27 +5,32 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.udacity.activity.MainActivity
 import com.udacity.environmentvariables.EnvironmentVariables.DOWNLOAD_ID
-import com.udacity.util.sendNotification
+import com.udacity.download_util.sendNotification
+import com.udacity.environmentvariables.DownloadStatus
+import com.udacity.environmentvariables.download_failed
+import com.udacity.environmentvariables.download_success
 
 
 object DownloadReceiver : BroadcastReceiver(){
     override fun onReceive(context: Context?, intent: Intent?) {
-        val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+        val downloadSuccessful:Boolean = intent?.getBooleanExtra(DownloadStatus,false)?:false
         context?.let { context ->
-            if (id == DOWNLOAD_ID ) {
-                sendDownloadStatus(true, context)
+            if (downloadSuccessful) {
+                sendDownloadStatus(true, context, intent)
             } else
-                sendDownloadStatus(false, context)
+                sendDownloadStatus(false, context, intent)
         }
     }
 }
 
 
-private fun sendDownloadStatus(downloadSuccessful: Boolean, context: Context) {
-    val message = if (downloadSuccessful) "Download success" else "Download failed"
+
+
+private fun sendDownloadStatus(downloadSuccessful: Boolean, context: Context, intent: Intent?) {
+    val title = intent?.getExtras()?.get("title")?.toString()?:"Unkown File Name"
+    val message = if (downloadSuccessful) download_success else download_failed
     val notificationManager = context.getSystemService(NotificationManager::class.java)
-    notificationManager.sendNotification(message, context)
+    notificationManager.sendNotification(message, title, context)
 }
 
