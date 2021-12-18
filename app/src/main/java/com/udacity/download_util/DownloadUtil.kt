@@ -29,6 +29,7 @@ suspend fun createRequest(
         .setAllowedOverMetered(true)
         .setAllowedOverRoaming(true)
 
+
     val downloadManager = fragContext?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     DOWNLOAD_ID = downloadManager.enqueue(request)// enqueue puts the download request in the queue.
 
@@ -42,19 +43,20 @@ suspend fun createRequest(
             val status = cursor.getInt(cursor.getColumnIndex((DownloadManager.COLUMN_STATUS)))
             when (status) {
                 DownloadManager.STATUS_FAILED -> {
+                    loadingButton.resetProgress()
                     sendFileDataToDownloadReceiver(title, desc, false, fragContext)
                     break
                 }
                 DownloadManager.STATUS_RUNNING -> {
-                    val total_Download_Size =
-                        cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
-                    val total_downloaded =
-                        cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
+                    val total_Download_Size = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
+                    val total_downloaded = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
+                    loadingButton.getDownloadProgress(10.0)
                     if (total_Download_Size != -1) {
                         percentage = (total_downloaded / total_Download_Size.toDouble())
                     }
                 }
                 DownloadManager.STATUS_SUCCESSFUL -> {
+                    loadingButton.resetProgress()
                     sendFileDataToDownloadReceiver(title, desc, true, fragContext)
                     break
                 }

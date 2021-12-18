@@ -2,24 +2,21 @@ package com.udacity
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Typeface
+import android.graphics.*
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.Shape
 import android.util.AttributeSet
 import android.view.View
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.udacity.environmentvariables.ProjectData
 import com.udacity.download_util.createRequest
 import kotlinx.coroutines.*
 import kotlin.properties.Delegates
 
-class LoadingButton @JvmOverloads constructor(
+open class LoadingButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
+    private val loadingButtonCanvas:Canvas = Canvas()
     private var widthSize = 0
     private var heightSize = 0
     private var progress = 0
@@ -30,11 +27,24 @@ class LoadingButton @JvmOverloads constructor(
     private var fragmentContext: Context? = context
     private val scope: CoroutineScope = CoroutineScope(CoroutineName("MyScope"))
 
-    private val valueAnimator = ValueAnimator()
+    private lateinit var valueAnimator:ValueAnimator
+
+    val path = Path()
+    val circle = RectF()
 
 
 
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+
+    private val buttonPaintLoaderStyle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = Color.YELLOW
+        textAlign = Paint.Align.CENTER
+        textSize = 55.0f
+        typeface = Typeface.create("", Typeface.BOLD)
+    }
+
+
+    private val buttonPaintBaseStyle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         color = Color.RED
         textAlign = Paint.Align.CENTER
@@ -42,14 +52,28 @@ class LoadingButton @JvmOverloads constructor(
         typeface = Typeface.create("", Typeface.BOLD)
     }
 
+    private val loadingCirclePaintStyle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = Color.YELLOW
+        textAlign = Paint.Align.CENTER
+        textSize = 55.0f
+        typeface = Typeface.create("", Typeface.BOLD)
+    }
+
+
+
+
+
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
         when (new) {
             ButtonState.Loading -> {
                 scope.launch {
                  createRequest(title, desc, url, fragmentContext!!, this@LoadingButton)
+
                     withContext(Dispatchers.Main){
                         buttonState = ButtonState.Completed
                     }
+
                 }
             }
             ButtonState.Completed -> {
@@ -67,9 +91,6 @@ class LoadingButton @JvmOverloads constructor(
 
 
 
-    fun updateIsClickContext() {
-        buttonState = ButtonState.Completed
-    }
 
 
     override fun performClick(): Boolean {
@@ -77,6 +98,7 @@ class LoadingButton @JvmOverloads constructor(
         this.title = ProjectData.getTitle()?:nulValueToEmptySpace
         this.desc = ProjectData.getDesc()?:nulValueToEmptySpace
         this.url = ProjectData.getUrl()?:nulValueToEmptySpace
+
 
         if (title != nulValueToEmptySpace && desc != nulValueToEmptySpace && url != nulValueToEmptySpace) {
              buttonState = ButtonState.Clicked
@@ -86,28 +108,47 @@ class LoadingButton @JvmOverloads constructor(
     }
 
 
-    suspend fun getDownloadProgress(progress: Double) {
-        withContext(Dispatchers.Main) {
-            valueAnimator.addUpdateListener {
-                @Override
-                fun onAnimationUpdate(animation: ValueAnimator) {
-                    val animatedValue = animation.getAnimatedValue().toString().toInt()
 
-                }
-            }
+    suspend fun getDownloadProgress(p1: Double) {
 
-        }
-        invalidate()
+
+//        withContext(Dispatchers.Main) {
+//            if(progress != widthSize && progress < widthSize){
+//                progress = progress.plus(p1.toInt())
+//                paint2.color = Color.YELLOW
+//            }else{
+//               resetProgress()
+//            }
+//
+//
+//            invalidate()
+//
+//        }
+
     }
 
+   suspend fun resetProgress(){
+        withContext(Dispatchers.Main) {
+            buttonPaintLoaderStyle.color = Color.RED
+            progress = 0
+            invalidate()
+        }
+
+    }
 
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         if (canvas != null) {
-            canvas.drawPaint(paint)
+            canvas.drawPaint(buttonPaintBaseStyle)
+
+            canvas.drawRect(0f,heightSize.toFloat(),progress.toFloat(),0f, buttonPaintLoaderStyle )
+            canvas.drawCircle(widthSize.toFloat() - 50, (heightSize/2).toFloat() ,40f,loadingCirclePaintStyle)
+
         }
     }
+
+
 
 
     /** TODO Add clickable function **/
@@ -124,7 +165,19 @@ class LoadingButton @JvmOverloads constructor(
         setMeasuredDimension(w, h)
     }
 
+//
+//    class CircleAnimator : ValueAnimator.AnimatorUpdateListener{
+//        override fun onAnimationUpdate(animation: ValueAnimator?) {
+//            //view place here
+//
+//
+//        }
+//
+//    }
+
 
 }
+
+
 
 
