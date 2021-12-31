@@ -8,9 +8,14 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
+import android.view.Gravity.CENTER
+import android.view.Gravity.TOP
 import android.view.View
+import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.udacity.R
 import com.udacity.environmentvariables.*
@@ -25,8 +30,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setSupportActionBar(toolbar)
         registerReceiver(DownloadReceiver, IntentFilter(SuccessMessage))
 
-        val radioButtonGroup = findViewById<RadioGroup>(R.id.button_group)
-
         val glideButton = findViewById<RadioButton>(R.id.glideButton)
         val loadAppButton = findViewById<RadioButton>(R.id.loadApp)
         val retrofitButton = findViewById<RadioButton>(R.id.retrofit)
@@ -35,7 +38,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         glideButton.setOnClickListener(this)
         loadAppButton.setOnClickListener(this)
         retrofitButton.setOnClickListener(this)
+
+
+        createChannel("id", "name")
+
     }
+
 
 
     private fun createChannel(id: String, name: String) {
@@ -51,11 +59,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             notificationChannel.enableVibration(true)
             notificationChannel.description = "THIS IS A TEST"
 
+
+
+
             val notificationManager = this.getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(notificationChannel)
         }
     }
-
 
     companion object {
         const val CHANNEL = "DOWNLOAD_CHANNEL"
@@ -86,9 +96,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         RETROFIT_URL
                     )
                 }
+
             }
         }
     }
 
 
 }
+
+
+
+
+
+

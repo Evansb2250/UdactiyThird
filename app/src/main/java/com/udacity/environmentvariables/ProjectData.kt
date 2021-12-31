@@ -14,4 +14,10 @@ object ProjectData {
     fun getUrl (): String? = url.toString()
     fun getTitle():String? = title
     fun getDesc(): String? = projectDesc
+
+    fun clearVariables() {
+        url = null
+        title = null
+        projectDesc = null
+    }
 }
