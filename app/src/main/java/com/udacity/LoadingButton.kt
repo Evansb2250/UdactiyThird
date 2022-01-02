@@ -3,18 +3,14 @@ package com.udacity
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.animation.ValueAnimator.INFINITE
-import android.app.ProgressDialog.show
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.RectF
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
-import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.core.animation.doOnEnd
-import com.google.android.material.snackbar.Snackbar
-import com.udacity.activity.MainActivity
 import com.udacity.download_util.createRequest
 import com.udacity.environmentvariables.*
 import kotlinx.coroutines.*
@@ -29,6 +25,36 @@ open class LoadingButton @JvmOverloads constructor(
 
     private val valueAnimator: ValueAnimator = ValueAnimator()
     private var buttonLabel = "Download"
+
+    val loadButtonPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        Paint.Style.FILL
+        color = getResources().getColor(R.color.loadButtonBarColor)
+        Paint.Align.CENTER
+        55.0f
+        Typeface.create("", Typeface.BOLD)
+
+    }
+
+
+    val LoadingButtonLabel =  Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        Paint.Style.FILL_AND_STROKE
+        color =  Color.BLACK
+        textAlign = Paint.Align.CENTER
+        textSize = 40.0f
+        typeface= Typeface.create("", Typeface.BOLD)
+        strokeWidth = 4f
+
+    }
+
+    val loadingCirclePaint =  Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        Paint.Style.FILL_AND_STROKE
+        color =  getResources().getColor(R.color.yelloCircle)
+        textAlign = Paint.Align.CENTER
+        textSize = 40.0f
+        typeface= Typeface.create("", Typeface.BOLD)
+        strokeWidth = 4f
+
+    }
 
 
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
@@ -90,21 +116,21 @@ open class LoadingButton @JvmOverloads constructor(
                 heightSize.toFloat(),
                 progress.toFloat(),
                 0f,
-                buttonPaintLoaderStyle
+                loadButtonPaint
             )
 
             canvas.drawArc(
                 circleLayout, 270f,
                 ((currentPercentage / 100) * 360f),
                 true,
-                loadingCirclePaintStyle
+                loadingCirclePaint
             )
 
             canvas.drawText(
                 buttonLabel,
                 widthSize.toFloat() / 2,
-                heightSize.toFloat() / 1.5f,
-                viewText
+                heightSize.toFloat() / 1.8f,
+                LoadingButtonLabel
             )
         }
     }
@@ -114,9 +140,9 @@ open class LoadingButton @JvmOverloads constructor(
         valueAnimator.apply {
             setValues(valuesHolder)
             duration = 2000
-            interpolator = AccelerateInterpolator()
+            interpolator = DecelerateInterpolator()
             repeatCount = INFINITE
-            buttonLabel = "We are Loading..."
+            buttonLabel = "We are Loading "
             addUpdateListener {
                 currentPercentage = it.getAnimatedValue(PERCENTAGE_VALUE_HOLDER) as Float
                 invalidate()
@@ -143,10 +169,10 @@ open class LoadingButton @JvmOverloads constructor(
         heightSize = h
 
         circleLayout.set(
-            (widthSize/2).toFloat() + 200,
-            (heightSize/2).toFloat()- 50f,
-            (widthSize/2).toFloat() + 300f,
-            (heightSize/2).toFloat() + 40
+            (widthSize/2.5).toFloat() + 210,
+            (heightSize/2.5).toFloat()- 10f,
+            (widthSize/2.5).toFloat() + 250f,
+            (heightSize/2.5).toFloat() + 25
         )
 
 

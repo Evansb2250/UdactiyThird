@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         retrofitButton.setOnClickListener(this)
 
 
-        createChannel("id", "name")
+        createChannel(NOTIFICATION_ID.toString(), CHANNEL)
 
     }
 
@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 name,
                 NotificationManager.IMPORTANCE_HIGH
             )
+
 
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.BLUE

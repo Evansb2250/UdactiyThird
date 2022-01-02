@@ -3,6 +3,7 @@ package com.udacity.environmentvariables
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
+import com.udacity.R
 
 object EnvironmentVariables {
     var DOWNLOAD_ID : Long  = 0
@@ -27,45 +28,9 @@ val SuccessMessage = "com.udacity.activity.intent.customDownloadReceiver"
 val DownloadStatus = "customDownloaderStatus"
 val download_success= "Download Succeeded"
 val download_failed="Download Failed"
-
-
-
-val buttonPaintLoaderStyle = getButtonPaintBaseStyle(
-    Paint.Style.FILL,
-    Color.BLUE,
-    Paint.Align.CENTER,
-    55.0f,
-    Typeface.create("", Typeface.BOLD)
-)
-
-val buttonPaintBaseStyle = getButtonPaintBaseStyle(
-    Paint.Style.FILL,
-    Color.BLUE,
-    Paint.Align.CENTER,
-    55.0f,
-    Typeface.create("", Typeface.BOLD)
-)
-
-val loadingCirclePaintStyle = getButtonPaintBaseStyle(
-    Paint.Style.FILL_AND_STROKE,
-    Color.YELLOW,
-    Paint.Align.CENTER,
-    55.0f,
-    Typeface.create("", Typeface.BOLD)
-)
-
-val viewText = getButtonPaintBaseStyle(
-    Paint.Style.FILL_AND_STROKE,
-    Color.BLACK,
-    Paint.Align.CENTER,
-    55.0f,
-    Typeface.create("", Typeface.NORMAL),
-4f
-)
-
 val nullValueToEmptySpace = ""
 
-private fun getButtonPaintBaseStyle(
+fun getButtonPaintBaseStyle(
     fill: Paint.Style,
     paintColor: Int,
     alignment: Paint.Align,
